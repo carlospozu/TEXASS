@@ -47,17 +47,15 @@ class UsuarioController(private val usuarioRepository: UsuarioRepository) {
     }
 
 
-    @PostMapping("pokemonFavorito/{token}/{pokemonId}")
-    fun guardarPokemonFavorito(@PathVariable token: String, @PathVariable pokemonId: Int) : Any {
-        println(token)
-        usuarioRepository.findAll().forEach { user ->
-            if (user.token == token) {
-                user.pokemonFavoritoId = pokemonId
-                usuarioRepository.save(user)
-                return "El usuario ${user.nombre} tiene un nuevo Pokémon favorito"
-            }
-        }
-        return "Token no encontrado"
+
+    @GetMapping("mostrarDatabase")
+    fun mostrarDatabase():MutableList<Usuario>{
+        return usuarioRepository.findAll()
+    }
+    @GetMapping("borrar")
+    fun borrar():MutableList<Usuario>{
+        usuarioRepository.deleteAll()
+        return usuarioRepository.findAll()
     }
 
 }
